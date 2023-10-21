@@ -1,2 +1,2 @@
 # swarm
-Screen saver written in golfing
+Screen saver written in golang
