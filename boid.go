@@ -7,8 +7,7 @@ import (
 )
 
 type boid struct {
-	centerX  float64
-	centerY  float64
+	center   point
 	rotation float64
 	points   []point
 }
@@ -25,8 +24,7 @@ func newBoid(x float64, y float64, rotation float64) boid {
 	)
 
 	boid := boid{
-		centerX:  x,
-		centerY:  y,
+		center:   newPoint(x, y),
 		rotation: rotation,
 		points:   points,
 	}
@@ -45,8 +43,8 @@ func drawBoid(imd *imdraw.IMDraw, boid boid) {
 		imd.EndShape = imdraw.SharpEndShape
 
 		imd.Push(
-			pixel.V(boid.points[index].x+boid.centerX, boid.points[index].y+boid.centerY),
-			pixel.V(boid.points[(index+1)%len(boid.points)].x+boid.centerX, boid.points[(index+1)%len(boid.points)].y+boid.centerY),
+			pixel.V(boid.points[index].x+boid.center.x, boid.points[index].y+boid.center.y),
+			pixel.V(boid.points[(index+1)%len(boid.points)].x+boid.center.x, boid.points[(index+1)%len(boid.points)].y+boid.center.y),
 		)
 		imd.Line(2)
 	}
@@ -55,7 +53,19 @@ func drawBoid(imd *imdraw.IMDraw, boid boid) {
 	}
 }
 
-func moveBoid(boid *boid) {
-	boid.centerX += 2
-	boid.centerY += 2
+func moveBoid(boid *boid, swarm swarm) {
+	changeTrajectory(boid, swarm)
+}
+
+// Change trajectory towards a point
+func changeTrajectory(boid *boid, swarm swarm) {
+	var angle = angleOfSlope(boid.center, swarm.center)
+	boid.rotation = angle
+
+	var slope = getSlope(boid.center, swarm.center)
+	var rise = slope
+	var run = 1.0
+
+	boid.center.x += rise
+	boid.center.y += run
 }

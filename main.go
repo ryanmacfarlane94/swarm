@@ -35,11 +35,11 @@ func run() {
 		imd.Clear()
 
 		moveSwarm(&swarm)
-		imd.Push(pixel.V(swarm.centerX, swarm.centerY))
+		imd.Push(pixel.V(swarm.center.x, swarm.center.y))
 		imd.Circle(5, 0)
 
 		for index := range swarm.boids {
-			moveBoid(&swarm.boids[index])
+			moveBoid(&swarm.boids[index], swarm)
 			drawBoid(imd, swarm.boids[index])
 		}
 
