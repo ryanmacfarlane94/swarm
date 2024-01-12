@@ -27,6 +27,11 @@ func newSwarm(x float64, y float64, rotation float64) swarm {
 }
 
 func moveSwarm(swarm *swarm) {
-	swarm.center.x += 2
-	swarm.center.y += 2
+	changeSwarmTrajectory(swarm)
+}
+
+// Change trajectory towards a point
+func changeSwarmTrajectory(swarm *swarm) {
+	swarm.rotation -= 0.005
+	swarm.center = nextPoint(swarm.center, swarm.rotation, 3)
 }

@@ -35,6 +35,7 @@ func run() {
 		imd.Clear()
 
 		moveSwarm(&swarm)
+
 		imd.Push(pixel.V(swarm.center.x, swarm.center.y))
 		imd.Circle(5, 0)
 

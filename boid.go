@@ -61,11 +61,5 @@ func moveBoid(boid *boid, swarm swarm) {
 func changeTrajectory(boid *boid, swarm swarm) {
 	var angle = angleOfSlope(boid.center, swarm.center)
 	boid.rotation = angle
-
-	var slope = getSlope(boid.center, swarm.center)
-	var rise = slope
-	var run = 1.0
-
-	boid.center.x += rise
-	boid.center.y += run
+	boid.center = nextPoint(boid.center, angle, 2)
 }
